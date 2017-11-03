@@ -3,11 +3,31 @@ oracledb Connection Pool demo
 
 oracledb 连接池 使用demo示例
 
+# Install
+
 ## linux 或 win 安装 oracledb
 
 请移步 [nodejs 使用官方oracledb库连接数据库 教程](https://www.cnblogs.com/rysinal/p/7779055.html)
 
-## 使用连接池
+## usage
+
+```javascript
+var oracledb = require('./oracleService');
+
+//notice that to replace YOURTABLE into a real table name
+var sql = 'SELECT * FROM ( SELECT A.*, ROWNUM RN FROM (SELECT * FROM YOURTABLE) A WHERE ROWNUM <= 10 ) WHERE RN >= 0';
+
+oracledb.exec(sql, function (err, ret) {
+    if(err) {
+        console.error(err)
+    }else {
+       console.log(ret)
+    }
+})
+
+```
+
+# 连接池说明
 
 当应用程序短时间使用大量连接时，Oracle建议使用连接池来提高效率。
 每个池可以包含一个或多个连接。
