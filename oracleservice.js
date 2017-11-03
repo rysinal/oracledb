@@ -36,9 +36,7 @@ OracleService.exec = function (sql, callback) {
     oraclePool.getConnection(function(err, conn) {
         if (err) {
             console.error("Oracle getConn fail: ==>", err, "<==");
-            conn.close(function (err) {
-                if (err) console.error(err.message);
-            });
+            doRelease(conn);
             return callback(err);
         }
         conn.execute(sql, function(err, result) {
